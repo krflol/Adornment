@@ -1,0 +1,1 @@
+Create a .env file with OPEN_AI_KEY ="Your Key"
