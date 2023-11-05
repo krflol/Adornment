@@ -1,0 +1,157 @@
+[
+    {
+        "label": "subprocess",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "subprocess",
+        "description": "subprocess",
+        "detail": "subprocess",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "traceback",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "traceback",
+        "description": "traceback",
+        "detail": "traceback",
+        "documentation": {}
+    },
+    {
+        "label": "inspect",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "inspect",
+        "description": "inspect",
+        "detail": "inspect",
+        "documentation": {}
+    },
+    {
+        "label": "wraps",
+        "importPath": "functools",
+        "description": "functools",
+        "isExtraImport": true,
+        "detail": "functools",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "OpenAI",
+        "importPath": "langchain.llms",
+        "description": "langchain.llms",
+        "isExtraImport": true,
+        "detail": "langchain.llms",
+        "documentation": {}
+    },
+    {
+        "label": "OpenAI",
+        "importPath": "langchain.llms",
+        "description": "langchain.llms",
+        "isExtraImport": true,
+        "detail": "langchain.llms",
+        "documentation": {}
+    },
+    {
+        "label": "openai",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "openai",
+        "description": "openai",
+        "detail": "openai",
+        "documentation": {}
+    },
+    {
+        "label": "setup",
+        "importPath": "setuptools",
+        "description": "setuptools",
+        "isExtraImport": true,
+        "detail": "setuptools",
+        "documentation": {}
+    },
+    {
+        "label": "find_packages",
+        "importPath": "setuptools",
+        "description": "setuptools",
+        "isExtraImport": true,
+        "detail": "setuptools",
+        "documentation": {}
+    },
+    {
+        "label": "llm_debugger",
+        "kind": 2,
+        "importPath": "llm_debug.llm_debug",
+        "description": "llm_debug.llm_debug",
+        "peekOfCode": "def llm_debugger(reflections=1, output = 'error_response.md'):  # Set a default reflection count\n    def decorator(func):\n        @wraps(func)\n        def wrapper(*args, **kwargs):\n            try:\n                return func(*args, **kwargs)\n            except Exception as e:\n                print(f\"Exception:'{e}' being sent to LLM for debugging\")\n                # Get the content of the function (source code)\n                function_content = inspect.getsource(func)",
+        "detail": "llm_debug.llm_debug",
+        "documentation": {}
+    },
+    {
+        "label": "send_to_llm_for_debugging",
+        "kind": 2,
+        "importPath": "llm_debug.llm_debug",
+        "description": "llm_debug.llm_debug",
+        "peekOfCode": "def send_to_llm_for_debugging(function_content, error_message, reflections):\n    prompt = (f\"Debug the following error:\\n{error_message}\\nin the function:\\n{function_content}\\n\"\n              \"Include the full updated function in your response.\")\n    messages = [{\"role\": \"system\", \"content\": \"You are a helpful assistant.\"}]\n    md_responses = []  # Store each response for logging\n    for i in range(reflections):\n        messages.append({\"role\": \"user\", \"content\": prompt})\n        response = openai.ChatCompletion.create(model=\"gpt-4\", messages=messages)\n        response_content = response.choices[0].message['content']\n        md_responses.append(response_content)",
+        "detail": "llm_debug.llm_debug",
+        "documentation": {}
+    },
+    {
+        "label": "OPENAI_API_KEY",
+        "kind": 5,
+        "importPath": "llm_debug.llm_debug",
+        "description": "llm_debug.llm_debug",
+        "peekOfCode": "OPENAI_API_KEY = os.getenv(\"OPENAI_API_KEY\")\nllm = OpenAI(api_key=OPENAI_API_KEY, model=\"gpt-4\")\nopenai.api_key = OPENAI_API_KEY\nmd_response = []\ndef llm_debugger(reflections=1, output = 'error_response.md'):  # Set a default reflection count\n    def decorator(func):\n        @wraps(func)\n        def wrapper(*args, **kwargs):\n            try:\n                return func(*args, **kwargs)",
+        "detail": "llm_debug.llm_debug",
+        "documentation": {}
+    },
+    {
+        "label": "llm",
+        "kind": 5,
+        "importPath": "llm_debug.llm_debug",
+        "description": "llm_debug.llm_debug",
+        "peekOfCode": "llm = OpenAI(api_key=OPENAI_API_KEY, model=\"gpt-4\")\nopenai.api_key = OPENAI_API_KEY\nmd_response = []\ndef llm_debugger(reflections=1, output = 'error_response.md'):  # Set a default reflection count\n    def decorator(func):\n        @wraps(func)\n        def wrapper(*args, **kwargs):\n            try:\n                return func(*args, **kwargs)\n            except Exception as e:",
+        "detail": "llm_debug.llm_debug",
+        "documentation": {}
+    },
+    {
+        "label": "openai.api_key",
+        "kind": 5,
+        "importPath": "llm_debug.llm_debug",
+        "description": "llm_debug.llm_debug",
+        "peekOfCode": "openai.api_key = OPENAI_API_KEY\nmd_response = []\ndef llm_debugger(reflections=1, output = 'error_response.md'):  # Set a default reflection count\n    def decorator(func):\n        @wraps(func)\n        def wrapper(*args, **kwargs):\n            try:\n                return func(*args, **kwargs)\n            except Exception as e:\n                print(f\"Exception:'{e}' being sent to LLM for debugging\")",
+        "detail": "llm_debug.llm_debug",
+        "documentation": {}
+    },
+    {
+        "label": "md_response",
+        "kind": 5,
+        "importPath": "llm_debug.llm_debug",
+        "description": "llm_debug.llm_debug",
+        "peekOfCode": "md_response = []\ndef llm_debugger(reflections=1, output = 'error_response.md'):  # Set a default reflection count\n    def decorator(func):\n        @wraps(func)\n        def wrapper(*args, **kwargs):\n            try:\n                return func(*args, **kwargs)\n            except Exception as e:\n                print(f\"Exception:'{e}' being sent to LLM for debugging\")\n                # Get the content of the function (source code)",
+        "detail": "llm_debug.llm_debug",
+        "documentation": {}
+    }
+]
