@@ -1,14 +1,5 @@
 [
     {
-        "label": "subprocess",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "subprocess",
-        "description": "subprocess",
-        "detail": "subprocess",
-        "documentation": {}
-    },
-    {
         "label": "os",
         "kind": 6,
         "isExtraImport": true,
@@ -44,6 +35,14 @@
         "documentation": {}
     },
     {
+        "label": "wraps",
+        "importPath": "functools",
+        "description": "functools",
+        "isExtraImport": true,
+        "detail": "functools",
+        "documentation": {}
+    },
+    {
         "label": "load_dotenv",
         "importPath": "dotenv",
         "description": "dotenv",
@@ -57,6 +56,22 @@
         "description": "dotenv",
         "isExtraImport": true,
         "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "OpenAI",
+        "importPath": "langchain.llms",
+        "description": "langchain.llms",
+        "isExtraImport": true,
+        "detail": "langchain.llms",
         "documentation": {}
     },
     {
@@ -85,6 +100,15 @@
         "documentation": {}
     },
     {
+        "label": "subprocess",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "subprocess",
+        "description": "subprocess",
+        "detail": "subprocess",
+        "documentation": {}
+    },
+    {
         "label": "setup",
         "importPath": "setuptools",
         "description": "setuptools",
@@ -98,6 +122,15 @@
         "description": "setuptools",
         "isExtraImport": true,
         "detail": "setuptools",
+        "documentation": {}
+    },
+    {
+        "label": "LLMDebugger",
+        "kind": 6,
+        "importPath": "llm_debug.LLMDebug",
+        "description": "llm_debug.LLMDebug",
+        "peekOfCode": "class LLMDebugger:\n    def __init__(self, reflections=1, output='error_response.md'):\n        load_dotenv()\n        OPENAI_API_KEY = os.getenv(\"OPENAI_API_KEY\")\n        self.llm = OpenAI(api_key=OPENAI_API_KEY, model=\"gpt-4\")\n        openai.api_key = OPENAI_API_KEY\n        self.reflections = reflections\n        self.output = output\n    def __call__(self, func):\n        @wraps(func)",
+        "detail": "llm_debug.LLMDebug",
         "documentation": {}
     },
     {
