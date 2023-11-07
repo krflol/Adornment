@@ -13,7 +13,7 @@ import openai
 load_dotenv()
 # Initialize LangChain's LLM with GPT-4 using the API key from .env
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-llm = OpenAI(api_key=OPENAI_API_KEY, model="gpt-4")
+llm = OpenAI(api_key=OPENAI_API_KEY, model="gpt-4-1106-preview")
 openai.api_key = OPENAI_API_KEY
 md_response = []
 def llm_debugger(reflections=1, output = 'error_response.md'):  # Set a default reflection count
