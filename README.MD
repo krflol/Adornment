@@ -1,5 +1,3 @@
-
-```markdown
 # LLM Debugger
 
 LLM Debugger is a Python package that uses OpenAI's GPT-4 model to debug Python code. When a function decorated with `@llm_debugger` raises an exception, the function's source code and the traceback are sent to the language model for debugging. The model's responses are then logged to a file.
@@ -10,7 +8,6 @@ To install the package, navigate to the package directory and run:
 
 ```bash
 pip install .
-```
 
 ## Usage
 
