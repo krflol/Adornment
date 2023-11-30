@@ -8,6 +8,7 @@ To install the package, navigate to the package directory and run:
 
 ```bash
 pip install .
+```
 
 ## Usage
 
