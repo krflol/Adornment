@@ -119,3 +119,59 @@ def send_to_llm_for_improvement(function_content, additional_context):
 #    test_function(0)
 #except ZeroDivisionError:
 #    pass  # Exception has already been caught, logged, and printed by decorator
+def llm_implement(output='completed_function.md'):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            try:
+                # Get the content of the function (source code) and its docstring
+                function_content = inspect.getsource(func)
+                docstring = inspect.getdoc(func)
+
+                if not docstring:
+                    raise ValueError("Function must have a docstring for llm_implement to work.")
+
+                # Send to the LLM for completion
+                completion_response = send_to_llm_for_completion(docstring)
+
+                # Log the completed function to a file
+                with open(output, "w") as file:
+                    file.write(f"Incomplete function `{func.__name__}`:\n{function_content}\n\n")
+                    file.write(f"LLM Completion Based on Docstring:\n{completion_response}\n")
+                    file.write("----------\n")
+
+                # Note: The actual function execution is not replaced, 
+                # this is just for generating the completed version.
+                return func(*args, **kwargs)
+
+            except Exception as e:
+                print(f"Exception: '{e}'")
+                raise  # Re-raise the exception
+
+        return wrapper
+
+    return decorator
+
+def send_to_llm_for_completion(docstring):
+    print("Sending to LLM for function completion based on docstring")
+    prompt = (f"Complete the following function based on its docstring:\nDocstring:\n{docstring}\nFunction implementation:")
+
+    messages = [
+        {"role": "system", "content": "You are a code generation expert."},
+        {"role": "user", "content": prompt}
+    ]
+    response = openai.ChatCompletion.create(model="gpt-4", messages=messages)
+    response_content = response.choices[0].message['content']
+
+    return response_content
+
+# Example usage
+#@llm_implement()
+#def sample_function(x, y):
+#    """
+#    Add two numbers and return the result.
+#    """
+#    pass  # Incomplete implementation
+
+# Running the sample_function
+#sample_function(5, 3)
