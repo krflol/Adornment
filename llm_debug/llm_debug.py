@@ -5,8 +5,6 @@ import traceback
 import inspect
 from functools import wraps
 from dotenv import load_dotenv
-from dotenv import load_dotenv
-from langchain.llms import OpenAI
 from langchain.llms import OpenAI
 import openai
 # Load environment variables
