@@ -15,7 +15,7 @@ pip install .
 Here's an example of how to use the `llm_debugger` decorator in your code:
 
 ```python
-from llm_debug.llm_debug import llm_debugger
+from adornment import llm_debugger
 
 @llm_debugger(reflections=3, output='error_response.md')
 def buggy_function():
