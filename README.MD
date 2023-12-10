@@ -1,6 +1,6 @@
-# LLM Debugger
+# Adornment
 
-LLM Debugger is a Python package that uses OpenAI's GPT-4 model to debug Python code. When a function decorated with `@llm_debugger` raises an exception, the function's source code and the traceback are sent to the language model for debugging. The model's responses are then logged to a file.
+Adornment is a Python package that uses OpenAI's GPT-4 model to debug, improve, or implement Python code. When a function decorated with `@llm_debugger` raises an exception, the function's source code and the traceback are sent to the language model for debugging. The model's responses are then logged to a file.
 
 ## Installation
 
