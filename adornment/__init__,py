@@ -1,2 +1,2 @@
-from .adornment import llm_debugger
+from .adornment import *
 from .LLMDebug import LLMDebugger
