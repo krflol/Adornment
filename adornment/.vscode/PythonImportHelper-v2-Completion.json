@@ -1,0 +1,194 @@
+[
+    {
+        "label": "subprocess",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "subprocess",
+        "description": "subprocess",
+        "detail": "subprocess",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "traceback",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "traceback",
+        "description": "traceback",
+        "detail": "traceback",
+        "documentation": {}
+    },
+    {
+        "label": "inspect",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "inspect",
+        "description": "inspect",
+        "detail": "inspect",
+        "documentation": {}
+    },
+    {
+        "label": "wraps",
+        "importPath": "functools",
+        "description": "functools",
+        "isExtraImport": true,
+        "detail": "functools",
+        "documentation": {}
+    },
+    {
+        "label": "wraps",
+        "importPath": "functools",
+        "description": "functools",
+        "isExtraImport": true,
+        "detail": "functools",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "openai",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "openai",
+        "description": "openai",
+        "detail": "openai",
+        "documentation": {}
+    },
+    {
+        "label": "OpenAI",
+        "importPath": "openai",
+        "description": "openai",
+        "isExtraImport": true,
+        "detail": "openai",
+        "documentation": {}
+    },
+    {
+        "label": "OpenAI",
+        "importPath": "langchain.llms",
+        "description": "langchain.llms",
+        "isExtraImport": true,
+        "detail": "langchain.llms",
+        "documentation": {}
+    },
+    {
+        "label": "llm_debugger",
+        "kind": 2,
+        "importPath": "adornment",
+        "description": "adornment",
+        "peekOfCode": "def llm_debugger(reflections=1, output='error_response.md', additional_context=\"\"):\n    def decorator(func):\n        @wraps(func)\n        def wrapper(*args, **kwargs):\n            try:\n                return func(*args, **kwargs)\n            except Exception as e:\n                print(f\"Exception: '{e}' being sent to LLM for debugging\")\n                # Get the content of the function (source code)\n                function_content = inspect.getsource(func)",
+        "detail": "adornment",
+        "documentation": {}
+    },
+    {
+        "label": "send_to_llm_for_debugging",
+        "kind": 2,
+        "importPath": "adornment",
+        "description": "adornment",
+        "peekOfCode": "def send_to_llm_for_debugging(function_content, inputs, error_message, reflections, additional_context):\n    prompt = (f\"Debug the following error:\\n{error_message}\\nin the function:\\n{function_content}\\n\"\n              f\"with inputs:\\n{inputs}\\nInclude the full updated function in your response.\")\n    messages = [{\"role\": \"system\", \"content\": \"You are a helpful assistant.\"}]\n    md_responses = []  # Store each response for logging\n    for i in range(reflections):\n        messages.append({\"role\": \"user\", \"content\": prompt})\n        response = client.chat.completions.create(model=\"gpt-4-1106-preview\", messages=messages)\n        response_content = response.choices[0].message['content']\n        md_responses.append(response_content)",
+        "detail": "adornment",
+        "documentation": {}
+    },
+    {
+        "label": "llm_improve",
+        "kind": 2,
+        "importPath": "adornment",
+        "description": "adornment",
+        "peekOfCode": "def llm_improve(output='improved_function.md', additional_context=\"\"):\n    def decorator(func):\n        @wraps(func)\n        def wrapper(*args, **kwargs):\n            try:\n                # Get the content of the function (source code)\n                function_content = inspect.getsource(func)\n                # Send to the LLM for improvement suggestions\n                improvement_response = send_to_llm_for_improvement(function_content, additional_context)\n                # Log the improved function to a file",
+        "detail": "adornment",
+        "documentation": {}
+    },
+    {
+        "label": "send_to_llm_for_improvement",
+        "kind": 2,
+        "importPath": "adornment",
+        "description": "adornment",
+        "peekOfCode": "def send_to_llm_for_improvement(function_content, additional_context):\n    print(\"Sending to LLM for improvement suggestions\")\n    prompt = (f\"Improve the following function for better readability, efficiency, and include type hinting:\\n\"\n              f\"{function_content}\\n{additional_context}\")\n    messages = [\n        {\"role\": \"system\", \"content\": \"You are a programming expert.\"},\n        {\"role\": \"user\", \"content\": prompt}\n    ]\n    response = client.chat.completions.create(model=\"gpt-4-1106-preview\", messages=messages)\n    response_content = response.choices[0].message.content.strip()",
+        "detail": "adornment",
+        "documentation": {}
+    },
+    {
+        "label": "llm_implement",
+        "kind": 2,
+        "importPath": "adornment",
+        "description": "adornment",
+        "peekOfCode": "def llm_implement(output='completed_function.md'):\n    def decorator(func):\n        @wraps(func)\n        def wrapper(*args, **kwargs):\n            try:\n                # Get the content of the function (source code) and its docstring\n                function_content = inspect.getsource(func)\n                docstring = inspect.getdoc(func)\n                if not docstring:\n                    raise ValueError(\"Function must have a docstring for llm_implement to work.\")",
+        "detail": "adornment",
+        "documentation": {}
+    },
+    {
+        "label": "send_to_llm_for_completion",
+        "kind": 2,
+        "importPath": "adornment",
+        "description": "adornment",
+        "peekOfCode": "def send_to_llm_for_completion(docstring):\n    print(\"Sending to LLM for function completion based on docstring\")\n    prompt = (f\"Complete the following function based on its docstring:\\nDocstring:\\n{docstring}\\nFunction implementation:\")\n    messages = [\n        {\"role\": \"system\", \"content\": \"You are a code generation expert.\"},\n        {\"role\": \"user\", \"content\": prompt}\n    ]\n    response = client.chat.completions.create(model=\"gpt-4-1106-preview\", messages=messages)\n    response_content = response.choices[0].message.content.strip()\n    return response_content",
+        "detail": "adornment",
+        "documentation": {}
+    },
+    {
+        "label": "OPENAI_API_KEY",
+        "kind": 5,
+        "importPath": "adornment",
+        "description": "adornment",
+        "peekOfCode": "OPENAI_API_KEY = os.getenv(\"OPENAI_API_KEY\")\nclient = OpenAI(api_key=OPENAI_API_KEY)\n#llm = OpenAI(api_key=OPENAI_API_KEY, model=\"gpt-4-1106-preview\")\nmd_response = []\ndef llm_debugger(reflections=1, output='error_response.md', additional_context=\"\"):\n    def decorator(func):\n        @wraps(func)\n        def wrapper(*args, **kwargs):\n            try:\n                return func(*args, **kwargs)",
+        "detail": "adornment",
+        "documentation": {}
+    },
+    {
+        "label": "client",
+        "kind": 5,
+        "importPath": "adornment",
+        "description": "adornment",
+        "peekOfCode": "client = OpenAI(api_key=OPENAI_API_KEY)\n#llm = OpenAI(api_key=OPENAI_API_KEY, model=\"gpt-4-1106-preview\")\nmd_response = []\ndef llm_debugger(reflections=1, output='error_response.md', additional_context=\"\"):\n    def decorator(func):\n        @wraps(func)\n        def wrapper(*args, **kwargs):\n            try:\n                return func(*args, **kwargs)\n            except Exception as e:",
+        "detail": "adornment",
+        "documentation": {}
+    },
+    {
+        "label": "#llm",
+        "kind": 5,
+        "importPath": "adornment",
+        "description": "adornment",
+        "peekOfCode": "#llm = OpenAI(api_key=OPENAI_API_KEY, model=\"gpt-4-1106-preview\")\nmd_response = []\ndef llm_debugger(reflections=1, output='error_response.md', additional_context=\"\"):\n    def decorator(func):\n        @wraps(func)\n        def wrapper(*args, **kwargs):\n            try:\n                return func(*args, **kwargs)\n            except Exception as e:\n                print(f\"Exception: '{e}' being sent to LLM for debugging\")",
+        "detail": "adornment",
+        "documentation": {}
+    },
+    {
+        "label": "md_response",
+        "kind": 5,
+        "importPath": "adornment",
+        "description": "adornment",
+        "peekOfCode": "md_response = []\ndef llm_debugger(reflections=1, output='error_response.md', additional_context=\"\"):\n    def decorator(func):\n        @wraps(func)\n        def wrapper(*args, **kwargs):\n            try:\n                return func(*args, **kwargs)\n            except Exception as e:\n                print(f\"Exception: '{e}' being sent to LLM for debugging\")\n                # Get the content of the function (source code)",
+        "detail": "adornment",
+        "documentation": {}
+    },
+    {
+        "label": "LLMDebugger",
+        "kind": 6,
+        "importPath": "LLMDebug",
+        "description": "LLMDebug",
+        "peekOfCode": "class LLMDebugger:\n    def __init__(self, reflections=1, output='error_response.md'):\n        load_dotenv()\n        OPENAI_API_KEY = os.getenv(\"OPENAI_API_KEY\")\n        self.llm = OpenAI(api_key=OPENAI_API_KEY, model=\"gpt-4\")\n        openai.api_key = OPENAI_API_KEY\n        self.reflections = reflections\n        self.output = output\n    def __call__(self, func):\n        @wraps(func)",
+        "detail": "LLMDebug",
+        "documentation": {}
+    }
+]

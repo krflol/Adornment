@@ -5,14 +5,16 @@ import traceback
 import inspect
 from functools import wraps
 from dotenv import load_dotenv
-from langchain.llms import OpenAI
-import openai
+#from langchain.llms import OpenAI
+from openai import OpenAI
+
 # Load environment variables
 load_dotenv()
 # Initialize LangChain's LLM with GPT-4 using the API key from .env
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-llm = OpenAI(api_key=OPENAI_API_KEY, model="gpt-4-1106-preview")
-openai.api_key = OPENAI_API_KEY
+client = OpenAI(api_key=OPENAI_API_KEY)
+
+#llm = OpenAI(api_key=OPENAI_API_KEY, model="gpt-4-1106-preview")
 md_response = []
 def llm_debugger(reflections=1, output='error_response.md', additional_context=""):
     def decorator(func):
@@ -52,8 +54,8 @@ def send_to_llm_for_debugging(function_content, inputs, error_message, reflectio
 
     for i in range(reflections):
         messages.append({"role": "user", "content": prompt})
-        response = openai.ChatCompletion.create(model="gpt-4", messages=messages)
-        response_content = response.choices[0].message['content']
+        response = client.chat.completions.create(model="gpt-4-1106-preview", messages=messages)
+        response_content = response.choices[0].message.content.strip()
         md_responses.append(response_content)
         messages.append({"role": "assistant", "content": response_content})
         prompt = "Reflect on your previous answer and provide any corrections or additional insights if necessary."
@@ -97,8 +99,8 @@ def send_to_llm_for_improvement(function_content, additional_context):
         {"role": "system", "content": "You are a programming expert."},
         {"role": "user", "content": prompt}
     ]
-    response = openai.ChatCompletion.create(model="gpt-4", messages=messages)
-    response_content = response.choices[0].message['content']
+    response = client.chat.completions.create(model="gpt-4-1106-preview", messages=messages)
+    response_content = response.choices[0].message.content.strip()
 
     return response_content
 
@@ -160,8 +162,8 @@ def send_to_llm_for_completion(docstring):
         {"role": "system", "content": "You are a code generation expert."},
         {"role": "user", "content": prompt}
     ]
-    response = openai.ChatCompletion.create(model="gpt-4", messages=messages)
-    response_content = response.choices[0].message['content']
+    response = client.chat.completions.create(model="gpt-4-1106-preview", messages=messages)
+    response_content = response.choices[0].message.content.strip()
 
     return response_content
 
